@@ -16,6 +16,9 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
 using Swashbuckle.AspNetCore.Swagger;
+using FluentValidation.AspNetCore;
+using BookStoreWebApp.Services.Dtos;
+using FluentValidation;
 
 namespace BookStoreWebApp
 {
@@ -31,7 +34,17 @@ namespace BookStoreWebApp
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-            services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_2);
+            services.AddMvc()
+                    .SetCompatibilityVersion(CompatibilityVersion.Version_2_2)
+                    .AddFluentValidation();
+
+            services.AddTransient<IValidator<Author>, AuthorValidator>();
+            services.AddTransient<IValidator<Book>, BookValidator>();
+            services.AddTransient<IValidator<LineItem>, LineItemValidator>();
+            services.AddTransient<IValidator<Order>, OrderValidator>();
+            services.AddTransient<IValidator<OrderInfo>, OrderInfoValidator>();
+            services.AddTransient<IValidator<Review>, ReviewValidator>();
+
             services.AddAutoMapper();
 
             services.AddDbContext<DataContext>(options =>

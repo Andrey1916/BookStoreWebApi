@@ -1,4 +1,5 @@
 ﻿using BookStoreWebApp.DAL.Interfaces;
+using FluentValidation;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -14,5 +15,14 @@ namespace BookStoreWebApp.Services.Dtos
         public string CustomerName { get; set; }
 
         public ICollection<LineItem> LineItems { get; set; }
+    }
+
+    public class OrderValidator : AbstractValidator<Order>
+    {
+        public OrderValidator()
+        {
+            this.RuleFor(x => x.Id).NotEqual(Guid.Empty);
+            this.RuleFor(x => x.CustomerName).Length(1, 50);
+        }
     }
 }

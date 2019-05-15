@@ -11,7 +11,7 @@ namespace BookStoreWebApp.Models.ViewModels
         public DateTime DateOrderedUtc { get; set; }
         public DateTime ExpectedDeliveryDate { get; set; }
         public string CustomerName { get; set; }
-        //TODO:sdfsdf
+
         public ICollection<LineItemViewModel> LineItems { get; set; }
     }
 }

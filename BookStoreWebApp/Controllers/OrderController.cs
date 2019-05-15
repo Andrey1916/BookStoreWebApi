@@ -66,7 +66,6 @@ namespace BookStoreWebApp.Controllers
             }
 
 
-            //TODO: gdfk
             //await orderService.(model.OldName, model.NewName);
 
             return this.Ok();

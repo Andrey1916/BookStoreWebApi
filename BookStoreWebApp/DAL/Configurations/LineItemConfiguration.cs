@@ -14,7 +14,6 @@ namespace BookStoreWebApp.DAL.Configurations
         {
             builder.HasKey(t => t.Id);
 
-            // TODO: Check auto-increment
             builder.Property(t => t.LineNum)
                 .ValueGeneratedOnAdd();
 
@@ -25,10 +24,11 @@ namespace BookStoreWebApp.DAL.Configurations
             builder.HasOne(b => b.Order)
                 .WithMany(i => i.LineItems)
                 .HasForeignKey(fk => fk.OrderId)
-                .OnDelete(DeleteBehavior.Cascade);
-
-            builder.Property(t => t.Order)
+                .OnDelete(DeleteBehavior.Cascade)
                 .IsRequired();
+
+            builder.Property(b => b.BookPrice)
+                .HasColumnType("decimal(10,3)");
         }
     }
 }

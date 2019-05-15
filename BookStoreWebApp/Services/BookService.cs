@@ -142,7 +142,7 @@ namespace BookStoreWebApp.Services
                 Publisher = book.Publisher,
                 Title = book.Title
             };
-            //TODO:gfdfg
+            
             await context.Set<DAL.Entities.BookAuthor>()
                          .Where(ab => ab.BookId == book.Id)
                          .Include(p => p.Author)

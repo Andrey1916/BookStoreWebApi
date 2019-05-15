@@ -1,4 +1,5 @@
 ﻿using BookStoreWebApp.DAL.Interfaces;
+using FluentValidation;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -19,5 +20,17 @@ namespace BookStoreWebApp.Services.Dtos
         public string ImageUrl { get; set; }
 
         public ICollection<string> Authors { get; set; }
+    }
+
+    public class BookValidator : AbstractValidator<Book>
+    {
+        public BookValidator()
+        {
+            this.RuleFor(x => x.Id).NotEqual(Guid.Empty);
+            this.RuleFor(x => x.Title).MaximumLength(100);
+            this.RuleFor(x => x.OrgPrice).GreaterThanOrEqualTo(0);
+            this.RuleFor(x => x.ActualPrice).GreaterThanOrEqualTo(0);
+            this.RuleFor(x => x.PromotionalText).MaximumLength(200);
+        }
     }
 }

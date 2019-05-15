@@ -30,6 +30,12 @@ namespace BookStoreWebApp.DAL.Configurations
 
             builder.Property(t => t.SoftDeleted)
                 .HasDefaultValue<bool>(false);
+
+            builder.Property(t => t.ActualPrice)
+                .HasColumnType("decimal(10,3)");
+
+            builder.Property(t => t.OrgPrice)
+                .HasColumnType("decimal(10,3)");
         }
     }
 }

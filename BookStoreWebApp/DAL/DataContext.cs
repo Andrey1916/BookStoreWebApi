@@ -10,9 +10,6 @@ namespace BookStoreWebApp.DAL
 {
     public class DataContext : DbContext
     {
-        //TODO:sdfsf
-        public DataContext() { }
-
         public DataContext(DbContextOptions<DataContext> options) : base(options)
         { }
 
