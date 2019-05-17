@@ -24,13 +24,14 @@ namespace BookStoreWebApp.Controllers
             this.authorService = authorService ?? throw new ArgumentNullException(nameof(authorService));
             this.mapper = mapper ?? throw new ArgumentNullException(nameof(mapper));
         }
-
+        
         // GET api/values
         [HttpGet]
         public async Task<ActionResult<IEnumerable<string>>> Get()
         {
             return (await authorService.GetAllAsync()).ToList();
         }
+        
 
         // GET api/values/5
         [HttpGet("{id}")]
@@ -43,9 +44,8 @@ namespace BookStoreWebApp.Controllers
 
             return await authorService.GetByIdAsync(id);
         }
-
-        [HttpGet("{id}")]
-        [Route("api/[controller]/Books")]
+        
+        [HttpGet("Books/{author}")]
         public async Task<ActionResult<IEnumerable<BookViewModel>>> Get(string author)
         {
             if (string.IsNullOrWhiteSpace(author))
