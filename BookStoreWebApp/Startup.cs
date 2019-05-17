@@ -53,9 +53,9 @@ namespace BookStoreWebApp
             services.AddSwaggerGen(c =>
                c.SwaggerDoc("v1", new Info
                {
-                   Title = "My API",
+                   Title = "Book Store API",
                    Version = "v1",
-                   Description = "Swagger Core API"
+                   Description = "Book Store API"
                })
                 );
 
@@ -82,7 +82,7 @@ namespace BookStoreWebApp
 
             app.UseSwagger();
             app.UseSwaggerUI(c => {
-                c.SwaggerEndpoint("/swagger/v1/swagger.json", "Core API");
+                c.SwaggerEndpoint("/swagger/v1/swagger.json", "Book Store API");
                 c.RoutePrefix = string.Empty;
             });
 

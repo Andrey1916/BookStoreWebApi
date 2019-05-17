@@ -48,8 +48,7 @@ namespace BookStoreWebApp.Controllers
         }
 
         // GET api/<controller>/5
-        [HttpGet("{id}")]
-        [Route("api/[controller]/Reviews")]
+        [HttpGet("Reviews/{id}")]
         public async Task<ActionResult<IEnumerable<ReviewViewModel>>> GetReviews(Guid bookId)
         {
             if (bookId == Guid.Empty)
