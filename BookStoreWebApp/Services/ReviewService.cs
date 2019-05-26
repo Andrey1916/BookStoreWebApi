@@ -4,6 +4,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using BookStoreWebApp.Services.Dtos;
 using BookStoreWebApp.Services.Interfaces;
+using FluentValidation.Results;
 using Microsoft.EntityFrameworkCore;
 
 namespace BookStoreWebApp.Services
@@ -19,6 +20,21 @@ namespace BookStoreWebApp.Services
 
         public async Task<Guid> AddAsync(Review review)
         {
+            ReviewValidator validator = new ReviewValidator();
+            ValidationResult result = validator.Validate(review);
+
+            if (!result.IsValid)
+            {
+                string errMess = string.Empty;
+
+                foreach (var failure in result.Errors)
+                {
+                    errMess += $"Property { failure.PropertyName } failed validation. Error was: { failure.ErrorMessage }\n";
+                }
+
+                throw new ArgumentException(errMess);
+            }
+
             if (review.BookId == Guid.Empty)
             {
                 throw new ArgumentException("Book id is not set.");
@@ -76,6 +92,21 @@ namespace BookStoreWebApp.Services
 
         public async Task Update(Review review)
         {
+            ReviewValidator validator = new ReviewValidator();
+            ValidationResult result = validator.Validate(review);
+
+            if (!result.IsValid)
+            {
+                string errMess = string.Empty;
+
+                foreach (var failure in result.Errors)
+                {
+                    errMess += $"Property { failure.PropertyName } failed validation. Error was: { failure.ErrorMessage }\n";
+                }
+
+                throw new ArgumentException(errMess);
+            }
+
             var rev = await context.Set<DAL.Entities.Review>().FindAsync(review.Id);
 
             rev.Id = review.Id;

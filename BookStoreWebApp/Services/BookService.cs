@@ -1,5 +1,6 @@
 ﻿using BookStoreWebApp.Services.Dtos;
 using BookStoreWebApp.Services.Interfaces;
+using FluentValidation.Results;
 using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
@@ -19,6 +20,21 @@ namespace BookStoreWebApp.Services
 
         public async Task<Guid> AddAsync(Book book)
         {
+            BookValidator validator = new BookValidator();
+            ValidationResult result = validator.Validate(book);
+
+            if (!result.IsValid)
+            {
+                string errMess = string.Empty;
+
+                foreach (var failure in result.Errors)
+                {
+                    errMess += $"Property { failure.PropertyName } failed validation. Error was: { failure.ErrorMessage }\n";
+                }
+
+                throw new ArgumentException(errMess);
+            }
+
             var idBook = Guid.NewGuid();
             book.Id = idBook;
 
@@ -130,6 +146,21 @@ namespace BookStoreWebApp.Services
 
         public async Task UpdateAsync(Book book)
         {
+            BookValidator validator = new BookValidator();
+            ValidationResult result = validator.Validate(book);
+
+            if (!result.IsValid)
+            {
+                string errMess = string.Empty;
+
+                foreach (var failure in result.Errors)
+                {
+                    errMess += $"Property { failure.PropertyName } failed validation. Error was: { failure.ErrorMessage }\n";
+                }
+
+                throw new ArgumentException(errMess);
+            }
+
             var bookEntity = new DAL.Entities.Book
             {
                 ActualPrice = book.ActualPrice,

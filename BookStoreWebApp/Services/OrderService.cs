@@ -1,5 +1,6 @@
 ﻿using BookStoreWebApp.Services.Dtos;
 using BookStoreWebApp.Services.Interfaces;
+using FluentValidation.Results;
 using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
@@ -19,6 +20,21 @@ namespace BookStoreWebApp.Services
 
         public async Task<Guid> AddAsync(Order order)
         {
+            OrderValidator validator = new OrderValidator();
+            ValidationResult result = validator.Validate(order);
+
+            if (!result.IsValid)
+            {
+                string errMess = string.Empty;
+
+                foreach (var failure in result.Errors)
+                {
+                    errMess += $"Property { failure.PropertyName } failed validation. Error was: { failure.ErrorMessage }\n";
+                }
+
+                throw new ArgumentException(errMess);
+            }
+
             var id = Guid.NewGuid();
             var entity = new DAL.Entities.Order
             {
